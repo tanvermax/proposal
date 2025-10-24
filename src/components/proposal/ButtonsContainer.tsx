@@ -33,8 +33,8 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
       <YesButton onClick={onYesClick} />
       <ConditionButton onClick={onConditionClick} />
       <NoButton
-        position={noButtonPosition}
-        onHover={onNoHover} // ✅ Correctly pass single prop
+        position={noButtonPosition} // ✅ get from parent
+        onHover={onNoHover}        // ✅ handler from parent
       />
     </div>
   );

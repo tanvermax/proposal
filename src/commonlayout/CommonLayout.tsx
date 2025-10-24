@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import ButtonsContainer from '@/components/proposal/ButtonsContainer';
 import ConditionForm from '@/components/proposal/ConditionForm';
 import FloatingHearts from '@/components/proposal/FloatingHearts';
@@ -13,68 +13,44 @@ interface Position {
   y: number;
 }
 
-const getRandomPosition = (
-  width: number,
-  height: number,
-  size = 300,
-  margin = 50
-): Position => {
-  const safeWidth = width - size - margin;
-  const safeHeight = height - size - margin;
-
-  // Clamp the random position within safe bounds
-  const x = Math.random() * safeWidth + margin;
-  const y = Math.random() * safeHeight + margin;
-
-  // Prevent overflow if screen is too small
-  return {
-    x: Math.min(Math.max(x, margin), width - size - margin),
-    y: Math.min(Math.max(y, margin), height - size - margin),
-  };
-};
-
-
 const CommonLayout: React.FC = () => {
   const [proposalStatus, setProposalStatus] = useState<ProposalStatus>('pending');
-  const [noPosition, setNoPosition] = useState<Position>({ x: 0, y: 0 });
+  const [noPositionIndex, setNoPositionIndex] = useState(0);
   const [conditionText, setConditionText] = useState('');
-  const ref = useRef<HTMLDivElement>(null); // ✅ only one ref
+  const ref = useRef<HTMLDivElement>(null);
 
+  // 4 fixed positions for the "No" button
+  const noButtonPositions: Position[] = [
+    { x: 40, y: 40 },   // top-left
+    { x: 300, y: 40 },  // top-right
+    { x: 40, y: 300 },  // bottom-left
+    { x: 300, y: 300 }, // bottom-right
+  ];
+
+  // Move to next position on hover/tap
   const handleNoHover = () => {
-    if (ref.current) {
-      const { clientWidth, clientHeight } = ref.current;
-      setNoPosition(getRandomPosition(clientWidth, clientHeight));
-    }
+    setNoPositionIndex((prev) => (prev + 1) % noButtonPositions.length);
   };
-useEffect(() => {
-  if (ref.current) {
-    const { clientWidth, clientHeight } = ref.current;
-    setNoPosition(getRandomPosition(clientWidth, clientHeight));
-  }
-}, []);
-
-
-
 
   return (
     <div
       ref={ref}
-      className=" relative min-h-screen flex flex-col items-center justify-center 
+      className="relative min-h-screen flex flex-col items-center justify-center 
                  bg-gradient-to-br from-rose-100 via-pink-50 to-pink-200 overflow-hidden"
     >
       <FloatingHearts />
 
-      <div className=" z-20 bg-white/80 rounded-2xl shadow-xl p-8 max-w-4xl w-full text-center backdrop-blur-sm">
+      <div className="z-20 bg-white/80 rounded-2xl shadow-xl p-8 max-w-4xl w-full text-center backdrop-blur-sm">
         <ProposalTitle proposalStatus={proposalStatus} />
       </div>
 
       {proposalStatus === 'pending' && (
         <ButtonsContainer
           containerRef={ref}
-          noButtonPosition={noPosition}
+          noButtonPosition={noButtonPositions[noPositionIndex]} // ✅ pass current position
           onYesClick={() => setProposalStatus('yes')}
           onConditionClick={() => setProposalStatus('condition')}
-          onNoHover={handleNoHover}
+          onNoHover={handleNoHover} // ✅ pass handler
         />
       )}
 
