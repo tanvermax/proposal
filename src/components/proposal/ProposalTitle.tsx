@@ -19,7 +19,7 @@ const ProposalTitle: React.FC<ProposalTitleProps> = ({ proposalStatus }) => {
           A Condition! 😅 Write it down ✍️
         </h1>
       ) : (
-        <h1 className="relative text-4xl sm:text-5xl font-semibold text-gray-800">
+        <h1 className="relative text-xl sm:text-5xl font-semibold text-gray-800">
           My Dearest <span className="text-pink-600 font-bold">Fiha</span>,<br />
           Will You Marry Me? 💖
         </h1>

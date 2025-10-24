@@ -13,10 +13,21 @@ interface Position {
   y: number;
 }
 
-const getRandomPosition = (width: number, height: number, size = 120): Position => {
-  const maxX = width - size;
-  const maxY = height - size;
-  return { x: Math.random() * maxX, y: Math.random() * maxY };
+const getRandomPosition = (
+  width: number,
+  height: number,
+  size = 120,
+  margin = 20
+): Position => {
+  const maxX = width - size - margin;
+  const maxY = height - size - margin;
+  const minX = margin;
+  const minY = margin;
+
+  return {
+    x: Math.random() * (maxX - minX) + minX,
+    y: Math.random() * (maxY - minY) + minY,
+  };
 };
 
 const CommonLayout: React.FC = () => {
@@ -31,23 +42,29 @@ const CommonLayout: React.FC = () => {
       setNoPosition(getRandomPosition(clientWidth, clientHeight));
     }
   };
+useEffect(() => {
+  if (ref.current) {
+    const { clientWidth, clientHeight } = ref.current;
+    const margin = 40;
+    const size = 120;
+    setNoPosition({
+      x: clientWidth - size - margin,
+      y: clientHeight - size - margin,
+    });
+  }
+}, []);
 
-  useEffect(() => {
-    if (ref.current) {
-      const { clientWidth, clientHeight } = ref.current;
-      setNoPosition({ x: clientWidth * 0.7, y: clientHeight * 0.7 });
-    }
-  }, []);
+
 
   return (
     <div
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center 
+      className=" relative min-h-screen flex flex-col items-center justify-center 
                  bg-gradient-to-br from-rose-100 via-pink-50 to-pink-200 overflow-hidden"
     >
       <FloatingHearts />
 
-      <div className="z-20 bg-white/80 rounded-2xl shadow-xl p-8 max-w-4xl w-full text-center backdrop-blur-sm">
+      <div className=" z-20 bg-white/80 rounded-2xl shadow-xl p-8 max-w-4xl w-full text-center backdrop-blur-sm">
         <ProposalTitle proposalStatus={proposalStatus} />
       </div>
 
