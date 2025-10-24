@@ -1,0 +1,31 @@
+import React from 'react';
+
+type ProposalStatus = 'pending' | 'yes' | 'condition';
+
+interface ProposalTitleProps {
+  proposalStatus: ProposalStatus;
+}
+
+const ProposalTitle: React.FC<ProposalTitleProps> = ({ proposalStatus }) => {
+  return (
+    <div className="relative text-center">
+      <div className="absolute inset-0 blur-2xl opacity-30 bg-gradient-to-r from-pink-300 via-red-200 to-pink-400 rounded-full"></div>
+      {proposalStatus === 'yes' ? (
+        <h1 className="relative text-5xl sm:text-6xl font-extrabold text-pink-700 animate-bounce drop-shadow-lg">
+          SHE SAID YES! 💍✨
+        </h1>
+      ) : proposalStatus === 'condition' ? (
+        <h1 className="relative text-4xl sm:text-5xl font-bold text-blue-600 animate-pulse">
+          A Condition! 😅 Write it down ✍️
+        </h1>
+      ) : (
+        <h1 className="relative text-4xl sm:text-5xl font-semibold text-gray-800">
+          My Dearest <span className="text-pink-600 font-bold">Fiha</span>,<br />
+          Will You Marry Me? 💖
+        </h1>
+      )}
+    </div>
+  );
+};
+
+export default ProposalTitle;
