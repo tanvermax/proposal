@@ -8,7 +8,7 @@ interface Position {
 
 interface NoButtonProps {
   position: Position;
-  onHover: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onHover: (e: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>) => void;
 }
 
 const NoButton: React.FC<NoButtonProps> = ({ position, onHover }) => (
@@ -18,6 +18,8 @@ const NoButton: React.FC<NoButtonProps> = ({ position, onHover }) => (
   >
     <Button
       onMouseEnter={onHover}
+      onTouchStart={onHover}  // ✅ Fixed: use correct prop
+      onClick={onHover}       // ✅ Optional: moves if user taps/clicks
       className="bg-red-400 hover:bg-red-500 text-white px-6 py-4 sm:px-10 sm:py-5 rounded-full shadow-lg hover:cursor-not-allowed opacity-80"
     >
       No, I won’t 💔

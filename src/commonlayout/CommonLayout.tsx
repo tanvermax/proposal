@@ -16,19 +16,23 @@ interface Position {
 const getRandomPosition = (
   width: number,
   height: number,
-  size = 120,
-  margin = 20
+  size = 300,
+  margin = 50
 ): Position => {
-  const maxX = width - size - margin;
-  const maxY = height - size - margin;
-  const minX = margin;
-  const minY = margin;
+  const safeWidth = width - size - margin;
+  const safeHeight = height - size - margin;
 
+  // Clamp the random position within safe bounds
+  const x = Math.random() * safeWidth + margin;
+  const y = Math.random() * safeHeight + margin;
+
+  // Prevent overflow if screen is too small
   return {
-    x: Math.random() * (maxX - minX) + minX,
-    y: Math.random() * (maxY - minY) + minY,
+    x: Math.min(Math.max(x, margin), width - size - margin),
+    y: Math.min(Math.max(y, margin), height - size - margin),
   };
 };
+
 
 const CommonLayout: React.FC = () => {
   const [proposalStatus, setProposalStatus] = useState<ProposalStatus>('pending');

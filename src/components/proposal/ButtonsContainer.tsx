@@ -9,11 +9,11 @@ interface Position {
 }
 
 interface ButtonsContainerProps {
-  containerRef: React.RefObject<HTMLDivElement| null> ;
+  containerRef: React.RefObject<HTMLDivElement | null>;
   noButtonPosition: Position;
   onYesClick: () => void;
   onConditionClick: () => void;
-  onNoHover: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onNoHover: (e: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>) => void;
 }
 
 const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
@@ -32,7 +32,10 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
     >
       <YesButton onClick={onYesClick} />
       <ConditionButton onClick={onConditionClick} />
-      <NoButton position={noButtonPosition} onHover={onNoHover} />
+      <NoButton
+        position={noButtonPosition}
+        onHover={onNoHover} // ✅ Correctly pass single prop
+      />
     </div>
   );
 };
