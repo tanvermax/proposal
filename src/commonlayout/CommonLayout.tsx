@@ -45,14 +45,10 @@ const CommonLayout: React.FC = () => {
 useEffect(() => {
   if (ref.current) {
     const { clientWidth, clientHeight } = ref.current;
-    const margin = 40;
-    const size = 120;
-    setNoPosition({
-      x: clientWidth - size - margin,
-      y: clientHeight - size - margin,
-    });
+    setNoPosition(getRandomPosition(clientWidth, clientHeight));
   }
 }, []);
+
 
 
 
