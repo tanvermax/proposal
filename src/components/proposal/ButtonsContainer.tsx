@@ -30,7 +30,7 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
                  mt-8 border-4 border-dashed border-pink-300 rounded-2xl 
                  bg-white/60 backdrop-blur-md shadow-inner overflow-hidden"
     >
-      <YesButton onClick={onYesClick} />
+      <YesButton onYes={onYesClick} />
       <ConditionButton onClick={onConditionClick} />
       <NoButton
         position={noButtonPosition} // ✅ get from parent

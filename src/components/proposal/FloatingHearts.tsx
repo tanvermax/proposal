@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 const FloatingHearts: React.FC = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 15 }).map((_, i) => (
+      {Array.from({ length: 30 }).map((_, i) => (
         <motion.div
           key={i}
-          className="absolute text-pink-400"
+          className="absolute top-24 text-pink-400"
           style={{
             left: `${Math.random() * 100}%`,
             fontSize: `${Math.random() * 1.5 + 1.2}rem`,
